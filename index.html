@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Google Drive Image Viewer</title>
+    <style>
+      body {
+        background-color: #242526;
+        color: #FFFFFF;
+        font-family: Arial, sans-serif;
+      }
+
+      #main {
+        margin: auto;
+        max-width: 600px;
+        padding: 20px;
+      }
+
+      h1 {
+        text-align: center;
+        margin-top: 0;
+      }
+
+      label {
+        display: block;
+        margin-bottom: 10px;
+      }
+
+      input[type="text"] {
+        padding: 8px;
+        font-size: 16px;
+        width: 100%;
+        box-sizing: border-box;
+        border: none;
+        border-radius: 4px;
+        background-color: #3A3B3C;
+        color: #FFFFFF;
+      }
+
+      input[type="submit"] {
+        padding: 8px 16px;
+        font-size: 16px;
+        background-color: #0A84FF;
+        color: #FFFFFF;
+        border: none;
+        border-radius: 4px;
+        cursor: pointer;
+      }
+
+      input[type="submit"]:hover {
+        background-color: #0076FF;
+      }
+
+      #image-container {
+        margin-top: 20px;
+      }
+
+      img {
+        max-width: 250px;
+        max-height: 250px;
+        display: block;
+        margin: 0 auto;
+        box-shadow: 0 0 5px #FFFFFF;
+      }
+
+      a {
+        color: #0A84FF;
+        text-decoration: none;
+      }
+
+      a:hover {
+        text-decoration: underline;
+      }
+
+      button {
+        padding: 8px 16px;
+        font-size: 16px;
+        background-color: #3A3B3C;
+        color: #FFFFFF;
+        border: none;
+        border-radius: 4px;
+        cursor: pointer;
+      }
+
+      button:hover {
+        background-color: #4E4F50;
+      }
+          button.clicked {
+  background-color: #0076FF;
+}
+    </style>
+  </head>
+  <body>
+    <div id="main">
+      <h1>Google Drive Image Viewer</h1>
+      <form onsubmit="showImage(); return false;">
+        <label for="image-link">Enter Google Drive image link:</label>
+        <input type="text" id="image-link" name="image-link">
+        <input type="submit" value="Show Image">
+      </form>
+      <div id="image-container" style="display:none;">
+        <img id="image">
+        <br>
+        <a id="image-link-url" target="_blank">
+          View Image on Google Drive
+        </a>
+        <br>
+        <button onclick="copyImageLink()">Copy Image Link</button>
+      </div>
+    </div>
+    <script>
+      function showImage() {
+        var link = document.getElementById("image-link").value;
+        var fileId = link.match(/[-\w]{25,}/);
+        var imageUrl = "https://lh3.googleusercontent.com/d/" + fileId;
+        document.getElementById("image").src = imageUrl;
+        document.getElementById("image-link-url").href = link;
+        document.getElementById("image-container").style.display = "block";
+      }
+
+function copyImageLink() {
+  var link = document.getElementById("image-link-url").href;
+  var fileId = link.match(/[-\w]{25,}/);
+  var imageUrl = "https://lh3.googleusercontent.com/d/" + fileId;
+  var markdown = "![](" + imageUrl + ")";
+  var tempInput = document.createElement("textarea");
+  tempInput.value = markdown;
+  document.body.appendChild(tempInput);
+  tempInput.select();
+  document.execCommand("copy");
+  document.body.removeChild(tempInput);
+  
+  var copyButton = document.querySelector("button");
+  copyButton.textContent = "Copied!";
+  setTimeout(function() {
+    copyButton.textContent = "Copy Image Link";
+  }, 3000);
+}
+
+    </script>
+  </body>
+</html>
