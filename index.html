@@ -84,9 +84,10 @@
       button:hover {
         background-color: #4E4F50;
       }
-button.clicked {
+      
+      button.clicked {
   background-color: #0076FF !important;
-}
+      }
     </style>
   </head>
   <body>
@@ -128,7 +129,13 @@ function copyImageLink() {
   tempInput.select();
   document.execCommand("copy");
   document.body.removeChild(tempInput);
-  
+    var copyButton = document.querySelector("button");
+  copyButton.classList.add("clicked");
+  console.log("Button clicked!");
+  setTimeout(function() {
+    copyButton.classList.remove("clicked");
+  }, 300);
+}
   var copyButton = document.querySelector("button");
   copyButton.textContent = "Copied!";
   setTimeout(function() {
