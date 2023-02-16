@@ -129,21 +129,15 @@ function copyImageLink() {
   tempInput.select();
   document.execCommand("copy");
   document.body.removeChild(tempInput);
-    var copyButton = document.querySelector("button");
-  copyButton.classList.add("clicked");
-  console.log("Button clicked!");
-  setTimeout(function() {
-    copyButton.classList.remove("clicked");
-  }, 300);
-}
+  
   var copyButton = document.querySelector("button");
+  copyButton.style.backgroundColor = "#28a745";
   copyButton.textContent = "Copied!";
   setTimeout(function() {
+    copyButton.style.backgroundColor = "#3A3B3C";
     copyButton.textContent = "Copy Image Link";
   }, 3000);
 }
-
-
     </script>
   </body>
 </html>
