@@ -1,55 +1,18 @@
 <!DOCTYPE html>
 <html>
   <head>
-    <title>Simple PDF Reader</title>
+    <title>Keycode Logger</title>
   </head>
   <body>
-    <input type="file" id="pdf-file" accept=".pdf">
-    <div id="pdf-viewer"></div>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/2.9.359/pdf.min.js"></script>
+    <h1>Keycode Logger</h1>
+    <p>Press any key to see its keycode.</p>
+    <p>Keycode: <span id="keycode"></span></p>
+
     <script>
-      const fileInput = document.getElementById("pdf-file");
-      const pdfViewer = document.getElementById("pdf-viewer");
-      let currentPdf = null;
-
-      fileInput.addEventListener("change", (event) => {
-        const file = event.target.files[0];
-        if (file.type !== "application/pdf") {
-          alert("Please select a PDF file.");
-          return;
-        }
-        const reader = new FileReader();
-        reader.onload = (event) => {
-          const pdfData = new Uint8Array(event.target.result);
-          pdfjsLib.getDocument({ data: pdfData }).promise.then((pdf) => {
-            currentPdf = pdf;
-            renderAllPages(pdf);
-          });
-        };
-        reader.readAsArrayBuffer(file);
+      document.addEventListener("keydown", function(event) {
+        var keycode = event.keyCode || event.which;
+        document.getElementById("keycode").innerHTML = keycode;
       });
-
-      // Allow user to choose new PDF by clicking the button again
-      pdfViewer.addEventListener("click", () => {
-        if (currentPdf) {
-          fileInput.click();
-        }
-      });
-
-      // Renders all the pages of the given PDF file
-      function renderAllPages(pdf) {
-        for (let i = 1; i <= pdf.numPages; i++) {
-          pdf.getPage(i).then((page) => {
-            const canvas = document.createElement("canvas");
-            pdfViewer.appendChild(canvas);
-            const context = canvas.getContext("2d");
-            const viewport = page.getViewport({ scale: 1 });
-            canvas.width = viewport.width;
-            canvas.height = viewport.height;
-            page.render({ canvasContext: context, viewport });
-          });
-        }
-      }
     </script>
   </body>
 </html>
