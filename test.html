@@ -4,6 +4,8 @@
   <title>WebUSB Example</title>
 </head>
 <body>
+	  <button id="connectButton">Connect to USB Device</button>
+
   <script>
     // Include the USBIO class here
 	//USB I/O class for WebUSB
@@ -127,7 +129,10 @@ class USBIO {
       }
     }
 
-    main();
+    document.getElementById("connectButton").addEventListener("click", () => {
+      main();
+    });
+
   </script>
 </body>
 </html>
